@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Item } from '../item';
 
 @Component({
@@ -7,13 +7,11 @@ import { Item } from '../item';
   styleUrls: ['./todo-item.component.css'],
 })
 export class TodoItemComponent {
-  item: Item = {
-    id: 1,
-    name: 'Buy Milk',
-    status: false,
-  };
+  @Input() item?: Item;
 
   changeStatus() {
-    this.item.status = !this.item.status;
+    if (this.item) {
+      this.item.status = !this.item.status;
+    }
   }
 }
