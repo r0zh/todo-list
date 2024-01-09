@@ -1,0 +1,7 @@
+<app-todo-form (onAddItem)="onAddItem($event)"></app-todo-form>
+<app-todo-item-list
+  [items]="items"
+  (onChangeName)="onChangeName($event)"
+  (onChangeStatus)="onChangeStatus($event)"
+  (onRemoveItem)="onRemoveItem($event)"
+></app-todo-item-list>
