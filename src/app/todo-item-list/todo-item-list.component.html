@@ -1,5 +1,7 @@
 <div>
-  <div *ngFor="let item of items">
-    <app-todo-item [item]="item"></app-todo-item>
-  </div>
+  <app-todo-item
+    *ngFor="let item of items"
+    [item]="item"
+    (onRemoveItem)="onRemoveItem($event)"
+  ></app-todo-item>
 </div>

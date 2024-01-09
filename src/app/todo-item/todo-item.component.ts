@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+
 import { Item } from '../item';
 
 @Component({
@@ -13,5 +14,11 @@ export class TodoItemComponent {
     if (this.item) {
       this.item.status = !this.item.status;
     }
+  }
+
+  @Output() onRemoveItem = new EventEmitter<Item>();
+
+  removeItem() {
+    this.onRemoveItem.emit(this.item);
   }
 }

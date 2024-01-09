@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild } from '@angular/core';
 import { Item } from '../item';
 import { ITEMS } from '../mock-items';
+import { TodoItemComponent } from '../todo-item/todo-item.component';
 
 @Component({
   selector: 'app-todo-item-list',
@@ -17,5 +18,15 @@ export class TodoItemListComponent {
 
   getItems(): Item[] {
     return ITEMS;
+  }
+
+  @ViewChild('todoItem') todoItem!: TodoItemComponent;
+
+  onRemoveItem(item: Item) {
+    console.log('removeItem', item);
+    const index = this.items.indexOf(item);
+    if (index > -1) {
+      this.items.splice(index, 1);
+    }
   }
 }
