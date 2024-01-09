@@ -1,4 +1,5 @@
 <div>
+  <app-todo-item-form (onAddItem)="onAddItem($event)"></app-todo-item-form>
   <app-todo-item
     *ngFor="let item of items"
     [item]="item"

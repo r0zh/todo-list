@@ -1,0 +1,28 @@
+<div class="grid grid-cols-3 gap-4 p-4 bg-white rounded">
+  <input
+    id="name"
+    name="name"
+    [(ngModel)]="item.name"
+    required
+    placeholder="New item"
+  />
+  <button type="submit" class="m-auto" (click)="addItem()">
+    <span class="inline-flex rounded-md bg-green-500 p-1.5">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke-linejoin="round"
+        stroke-linecap="round"
+        stroke="white"
+        height="24"
+        fill="none"
+        class="svg"
+      >
+        <line y2="19" y1="5" x2="12" x1="12"></line>
+        <line y2="12" y1="12" x2="19" x1="5"></line>
+      </svg>
+    </span>
+  </button>
+</div>

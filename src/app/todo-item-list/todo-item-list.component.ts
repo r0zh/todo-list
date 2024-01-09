@@ -3,6 +3,7 @@ import { Item } from '../item';
 import { ITEMS } from '../mock-items';
 import { TodoItemComponent } from '../todo-item/todo-item.component';
 import { LocalStorageService } from '../localStorageService';
+import { TodoItemFormComponent } from '../todo-item-form/todo-item-form.component';
 
 @Component({
   selector: 'app-todo-item-list',
@@ -23,8 +24,6 @@ export class TodoItemListComponent {
     return ITEMS;
   }
 
-  @ViewChild('todoItem') todoItem!: TodoItemComponent;
-
   onRemoveItem(item: Item) {
     console.log('removeItem', item);
     const index = this.items.indexOf(item);
@@ -40,6 +39,12 @@ export class TodoItemListComponent {
     if (index > -1) {
       this.items[index].status = item.status;
     }
+    this.updateItems();
+  }
+
+  onAddItem(item: Item) {
+    console.log('onAddItem', item);
+    this.items.push(item);
     this.updateItems();
   }
 
