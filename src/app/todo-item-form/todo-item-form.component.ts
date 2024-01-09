@@ -8,7 +8,6 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class TodoItemFormComponent {
   item: Item = {
-    id: 0,
     name: '',
     status: false,
   };
@@ -19,7 +18,6 @@ export class TodoItemFormComponent {
     if (this.item.name != '') {
       this.onAddItem.emit(this.item);
       this.item = {
-        id: 0,
         name: '',
         status: false,
       };
