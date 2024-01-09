@@ -1,15 +1,17 @@
-<div class="flex items-center space-x-4 p-4 bg-white rounded shadow">
+<div class="flex items-center gap-4 p-4 bg-white rounded shadow">
   <input
     type="checkbox"
     (change)="changeStatus()"
     class="form-checkbox h-5 w-5 text-gray-600"
   />
   <span
-    class="text-gray-600 dark:text-gray-300"
-    [ngClass]="item.status ? 'text-green-500' : 'text-red-500'"
+    class="text-gray-600 text-lg"
+    [ngClass]="item.status ? 'line-through' : ''"
     >{{ item.name }}</span
   >
-  <button class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+  <button
+    class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 mx-20"
+  >
     Remove
   </button>
 </div>
