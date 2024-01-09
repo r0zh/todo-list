@@ -12,4 +12,8 @@ export class TodoItemComponent {
     name: 'Buy Milk',
     status: false,
   };
+
+  changeStatus() {
+    this.item.status = !this.item.status;
+  }
 }

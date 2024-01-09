@@ -1,5 +1,9 @@
 <div>
-  <input type="checkbox" />
-  <span>{{ item.name }}</span>
+  <input type="checkbox" (change)="changeStatus()" />
+  <span
+    class="text-green-500"
+    [ngClass]="item.status ? 'text-green-500' : 'text-red-500'"
+    >{{ item.name }}</span
+  >
   <button>Remove</button>
 </div>
