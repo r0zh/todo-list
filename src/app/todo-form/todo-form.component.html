@@ -1,13 +1,16 @@
-<div class="grid grid-cols-3 gap-4 p-4 bg-white rounded">
+<div class="flex justify-between gap-4 p-4 bg-white rounded">
   <input
     id="name"
     name="name"
     [(ngModel)]="item.name"
     required
     placeholder="New item"
+    class="w-full"
   />
-  <button type="submit" class="m-auto" (click)="addItem()">
-    <span class="inline-flex rounded-md bg-green-500 p-1.5">
+  <button type="submit" (click)="addItem()">
+    <span
+      class="inline-flex rounded-md bg-green-500 p-1.5 transition ease-in-out delay-75 hover:bg-green-700 text-white font-medium hover:scale-105"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
