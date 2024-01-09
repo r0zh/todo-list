@@ -10,9 +10,12 @@ import { Item } from '../item';
 export class TodoItemComponent {
   @Input() item?: Item;
 
+  @Output() onChangeStatus = new EventEmitter<Item>();
+
   changeStatus() {
     if (this.item) {
       this.item.status = !this.item.status;
+      this.onChangeStatus.emit(this.item);
     }
   }
 
