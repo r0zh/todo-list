@@ -6,11 +6,12 @@
       class="form-checkbox h-5 w-5 text-gray-600"
       [checked]="item.status"
     />
-    <span
+    <input
       class="text-gray-600 text-lg"
       [ngClass]="item.status ? 'line-through' : ''"
-      >{{ item.name }}</span
-    >
+      [(ngModel)]="item.name"
+      (ngModelChange)="changeName($event)"
+    />
   </div>
 
   <div class="flex items-center justify-center">

@@ -19,6 +19,12 @@ export class TodoItemComponent {
     }
   }
 
+  @Output() onChangeName = new EventEmitter<Item>();
+
+  changeName(name: String) {
+    this.onChangeName.emit(this.item);
+  }
+
   @Output() onRemoveItem = new EventEmitter<Item>();
 
   removeItem() {
