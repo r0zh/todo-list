@@ -13,6 +13,8 @@ export class TodoComponent {
 
   ngOnInit(): void {
     this.items = this.localStorageService.loadItems();
+    // order the array so that the completed items are at the bottom
+    this.items.sort((a, b) => (a.status === b.status ? 0 : a.status ? 1 : -1));
   }
 
   onAddItem(item: Item) {
@@ -41,6 +43,8 @@ export class TodoComponent {
     if (index > -1) {
       this.items[index].status = item.status;
     }
+    // reorder the list of items so that the completed items are at the bottom
+    this.items.sort((a, b) => (a.status === b.status ? 0 : a.status ? 1 : -1));
 
     // update the items in local storage
     this.updateItems();
