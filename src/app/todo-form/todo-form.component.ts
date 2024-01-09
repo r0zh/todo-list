@@ -1,12 +1,12 @@
-import { Item } from './../item';
+import { Item } from '../item';
 import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-todo-item-form',
-  templateUrl: './todo-item-form.component.html',
-  styleUrls: ['./todo-item-form.component.css'],
+  selector: 'app-todo-form',
+  templateUrl: './todo-form.component.html',
+  styleUrls: ['./todo-form.component.css'],
 })
-export class TodoItemFormComponent {
+export class TodoFormComponent {
   item: Item = {
     name: '',
     status: false,
