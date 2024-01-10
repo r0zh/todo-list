@@ -8,6 +8,7 @@ import { TodoItemListComponent } from './todo-item-list/todo-item-list.component
 import { TodoFormComponent } from './todo-form/todo-form.component';
 import { FormsModule } from '@angular/forms';
 import { TodoComponent } from './todo/todo.component';
+import { RandomTodoItemComponent } from './random-todo-item/random-todo-item.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { TodoComponent } from './todo/todo.component';
     TodoItemListComponent,
     TodoFormComponent,
     TodoComponent,
+    RandomTodoItemComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],
