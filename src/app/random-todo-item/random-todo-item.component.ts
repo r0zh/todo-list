@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./random-todo-item.component.css'],
 })
 export class RandomTodoItemComponent {
-  numTasks = 0;
+  numTasks = 1;
   addRandomItems() {
     for (let i = 0; i < this.numTasks; i++) {
       console.log('Adding random item', i + 1);
