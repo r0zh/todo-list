@@ -16,7 +16,7 @@ export class TodoFormComponent {
 
   addItem() {
     if (this.item.name != '') {
-      this.onAddItem.emit(this.item);
+      this.onAddItem.emit({...this.item});
       this.item = {
         name: '',
         status: false,
