@@ -5,6 +5,7 @@
     Bored? Add some random tasks
   </p>
   <input
+    [(ngModel)]="numTasks"
     type="number"
     class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
     placeholder="Number of tasks"
@@ -12,6 +13,7 @@
     required
   />
   <button
+    (click)="addRandomItems()"
     class="px-4 py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 focus:outline-none"
   >
     Add
