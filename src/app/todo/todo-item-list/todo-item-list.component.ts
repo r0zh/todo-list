@@ -6,7 +6,6 @@ import { LocalStorageService } from '../services/localStorageService';
 @Component({
   selector: 'app-todo-item-list',
   templateUrl: './todo-item-list.component.html',
-  styleUrls: ['./todo-item-list.component.css'],
 })
 export class TodoItemListComponent {
   constructor(private localStorageService: LocalStorageService) {}

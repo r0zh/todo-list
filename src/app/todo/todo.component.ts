@@ -5,7 +5,6 @@ import { LocalStorageService } from './services/localStorageService';
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
-  styleUrls: ['./todo.component.css'],
 })
 export class TodoComponent {
   items: Item[] = [];

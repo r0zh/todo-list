@@ -5,7 +5,6 @@ import { Item } from '../interfaces/item';
 @Component({
   selector: 'app-random-todo-item',
   templateUrl: './random-todo-item.component.html',
-  styleUrls: ['./random-todo-item.component.css'],
 })
 export class RandomTodoItemComponent {
   @Output() onAddItem = new EventEmitter<Item>();
