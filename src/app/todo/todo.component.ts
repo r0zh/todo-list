@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Item } from '../item';
-import { LocalStorageService } from '../localStorageService';
+import { Item } from './interfaces/item';
+import { LocalStorageService } from './services/localStorageService';
 
 @Component({
   selector: 'app-todo',

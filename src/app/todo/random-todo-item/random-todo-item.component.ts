@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { RANDOM_ITEMS } from './random-items';
-import { Item } from '../item';
+import { Item } from '../interfaces/item';
 
 @Component({
   selector: 'app-random-todo-item',
