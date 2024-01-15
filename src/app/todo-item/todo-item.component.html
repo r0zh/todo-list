@@ -7,7 +7,7 @@
       [checked]="item.status"
     />
     <input
-      class="text-gray-600 text-lg"
+      class="text-gray-600 text-lg w-full"
       [ngClass]="item.status ? 'line-through' : ''"
       [(ngModel)]="item.name"
       (ngModelChange)="changeName($event)"
