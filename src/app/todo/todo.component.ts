@@ -20,6 +20,7 @@ export class TodoComponent {
   onAddItem(item: Item) {
     console.log('onAddItem', item);
     this.items.push(item);
+    this.sortItems();
     this.updateItems();
   }
 
@@ -39,12 +40,14 @@ export class TodoComponent {
     console.log('onChangeStatus', item);
     // get index of the item
     const index = this.items.indexOf(item);
+
     // if item exists
     if (index > -1) {
       this.items[index].status = item.status;
     }
+
     // reorder the list of items so that the completed items are at the bottom
-    this.items.sort((a, b) => (a.status === b.status ? 0 : a.status ? 1 : -1));
+    this.sortItems();
 
     // update the items in local storage
     this.updateItems();
@@ -62,7 +65,11 @@ export class TodoComponent {
     this.updateItems();
   }
 
-  updateItems() {
+  private updateItems() {
     this.localStorageService.saveItems(this.items);
+  }
+
+  private sortItems() {
+    this.items.sort((a, b) => (a.status === b.status ? 0 : a.status ? 1 : -1));
   }
 }
