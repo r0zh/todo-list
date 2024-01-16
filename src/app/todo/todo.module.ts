@@ -5,7 +5,7 @@ import { RandomTodoItemComponent } from './random-todo-item/random-todo-item.com
 import { TodoFormComponent } from './todo-form/todo-form.component';
 import { TodoItemListComponent } from './todo-item-list/todo-item-list.component';
 import { TodoItemComponent } from './todo-item/todo-item.component';
-import { TodoComponent } from './todo.component';
+import { TodoComponent } from './pages/todo.component';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
