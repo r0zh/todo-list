@@ -1,4 +1,4 @@
-<div>
+<div [@listAnimation]="items.length">
   <app-todo-item
     *ngFor="let item of items"
     [item]="item"
