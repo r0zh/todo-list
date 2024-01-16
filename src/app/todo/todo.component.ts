@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Item } from './interfaces/item';
-import { LocalStorageService } from './services/localStorageService';
+import { Item } from '../interfaces/item';
+import { LocalStorageService } from '../services/localStorageService';
 
 @Component({
   selector: 'app-todo',
@@ -13,7 +13,7 @@ export class TodoComponent {
   ngOnInit(): void {
     this.items = this.localStorageService.loadItems();
     // order the array so that the completed items are at the bottom
-    this.items.sort((a, b) => (a.status === b.status ? 0 : a.status ? 1 : -1));
+    this.sortItems();
   }
 
   onAddItem(item: Item) {

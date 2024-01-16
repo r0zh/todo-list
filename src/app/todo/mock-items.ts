@@ -1,4 +1,4 @@
-import { Item } from './interfaces/item';
+import { Item } from '../interfaces/item';
 
 export const ITEMS: Item[] = [
   { name: 'Study angular', status: false },

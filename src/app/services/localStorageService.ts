@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Item } from '../interfaces/item';
-import { ITEMS } from '../mock-items';
+import { ITEMS } from '../todo/mock-items';
 
 @Injectable({
   providedIn: 'root',

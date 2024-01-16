@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-import { Item } from '../interfaces/item';
+import { Item } from '../../interfaces/item';
 
 @Component({
   selector: 'app-todo-item',

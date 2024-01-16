@@ -1,4 +1,4 @@
-import { Item } from '../interfaces/item';
+import { Item } from '../../interfaces/item';
 
 export const RANDOM_ITEMS: Item[] = [
   { name: 'Clean bedroom', status: false },
