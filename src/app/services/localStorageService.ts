@@ -6,8 +6,6 @@ import { ITEMS } from '../todo/mock-items';
   providedIn: 'root',
 })
 export class LocalStorageService {
-  constructor() {}
-
   saveItems(items: Item[]) {
     localStorage.setItem('items', JSON.stringify(items));
   }
