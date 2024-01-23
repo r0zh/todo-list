@@ -68,7 +68,17 @@ export class TodoComponent {
     this.localStorageService.saveItems(this.items);
   }
 
+  private compareItems(a: Item, b: Item): number {
+   if (a.status === b.status) {
+      return 0;
+   } else if (a.status) {
+      return 1;
+   } else {
+      return -1;
+   }
+  }
+
   private sortItems() {
-    this.items.sort((a, b) => (a.status === b.status ? 0 : a.status ? 1 : -1));
+   this.items.sort(this.compareItems);
   }
 }

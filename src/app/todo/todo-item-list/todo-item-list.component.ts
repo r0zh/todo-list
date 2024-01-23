@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Item } from '../../interfaces/item';
-import { ITEMS } from '../mock-items';
 import { LocalStorageService } from '../../services/localStorageService';
 import {
   trigger,

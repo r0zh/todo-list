@@ -20,7 +20,7 @@ export class TodoItemComponent {
 
   @Output() onChangeName = new EventEmitter<Item>();
 
-  changeName(name: String) {
+  changeName(name: string) {
     this.onChangeName.emit(this.item);
   }
 
