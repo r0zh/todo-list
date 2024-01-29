@@ -10,12 +10,14 @@ import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    AppComponent,
     TodoItemComponent,
     TodoItemListComponent,
     TodoFormComponent,
     TodoComponent,
     RandomTodoItemComponent,
+  ],
+  exports: [
+    TodoComponent
   ],
   imports: [CommonModule, FormsModule],
 })
