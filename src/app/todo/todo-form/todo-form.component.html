@@ -6,6 +6,7 @@
     required
     placeholder="New item"
     class="w-full"
+    (keyup.enter)="addItem()"
   />
   <button type="submit" (click)="addItem()">
     <span
