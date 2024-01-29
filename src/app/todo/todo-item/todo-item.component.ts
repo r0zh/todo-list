@@ -1,32 +1,33 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { Item } from '../../interfaces/item';
+import { TodoService } from '../../services/todo.service';
 
 @Component({
   selector: 'app-todo-item',
   templateUrl: './todo-item.component.html',
 })
 export class TodoItemComponent {
+  constructor(private TodoService: TodoService) {}
   @Input() item?: Item;
-
-  @Output() onChangeStatus = new EventEmitter<Item>();
 
   changeStatus() {
     if (this.item) {
       this.item.status = !this.item.status;
-      this.onChangeStatus.emit(this.item);
+      this.TodoService.changeStatus({ ...this.item });
     }
   }
 
-  @Output() onChangeName = new EventEmitter<Item>();
-
   changeName(name: string) {
-    this.onChangeName.emit(this.item);
+    if (this.item) {
+      this.item.name = name;
+      this.TodoService.changeName({ ...this.item });
+    }
   }
 
-  @Output() onRemoveItem = new EventEmitter<Item>();
-
   removeItem() {
-    this.onRemoveItem.emit(this.item);
+    if (this.item) {
+      this.TodoService.removeItem( this.item );
+    }
   }
 }

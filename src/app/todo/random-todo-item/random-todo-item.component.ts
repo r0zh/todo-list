@@ -1,20 +1,20 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { RANDOM_ITEMS } from './random-items';
-import { Item } from '../../interfaces/item';
+import { TodoService } from '../../services/todo.service';
 
 @Component({
   selector: 'app-random-todo-item',
   templateUrl: './random-todo-item.component.html',
 })
 export class RandomTodoItemComponent {
-  @Output() onAddItem = new EventEmitter<Item>();
+  constructor(private TodoService: TodoService) {}
 
   numTasks = 1;
   addRandomItems() {
     for (let i = 0; i < this.numTasks; i++) {
       let randomItem =
         RANDOM_ITEMS[Math.floor(Math.random() * RANDOM_ITEMS.length)];
-      this.onAddItem.emit({ ...randomItem });
+      this.TodoService.addItem({ ...randomItem });
     }
   }
 }

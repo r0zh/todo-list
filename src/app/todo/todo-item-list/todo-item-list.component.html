@@ -2,8 +2,5 @@
   <app-todo-item
     *ngFor="let item of items"
     [item]="item"
-    (onRemoveItem)="removeItem($event)"
-    (onChangeStatus)="changeStatus($event)"
-    (onChangeName)="changeName($event)"
   ></app-todo-item>
 </div>

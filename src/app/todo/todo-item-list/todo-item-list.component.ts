@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component,  Input } from '@angular/core';
 import { Item } from '../../interfaces/item';
-import { LocalStorageService } from '../../services/localStorageService';
+import { TodoService } from '../../services/todo.service';
 import {
   trigger,
   transition,
@@ -32,24 +32,8 @@ const listAnimation = trigger('listAnimation', [
   animations: [listAnimation],
 })
 export class TodoItemListComponent {
-  constructor(private localStorageService: LocalStorageService) {}
+  constructor(private TodoService: TodoService) {}
 
-  @Input() items: Item[] = [];
+  items: Item[] = this.TodoService.items;
   // get items from local storage
-
-  @Output() onRemoveItem = new EventEmitter<Item>();
-  @Output() onChangeStatus = new EventEmitter<Item>();
-  @Output() onChangeName = new EventEmitter<Item>();
-
-  removeItem(item: Item) {
-    this.onRemoveItem.emit(item);
-  }
-
-  changeStatus(item: Item) {
-    this.onChangeStatus.emit(item);
-  }
-
-  changeName(item: Item) {
-    this.onChangeName.emit(item);
-  }
 }
