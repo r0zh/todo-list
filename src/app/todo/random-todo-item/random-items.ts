@@ -1,6 +1,13 @@
 import { Item } from '../../interfaces/item';
 
 export const RANDOM_ITEMS: Item[] = [
+  { name: 'Study angular', status: false },
+  { name: 'Fix item style', status: false },
+  { name: 'Create list component', status: false },
+  { name: 'Create item component', status: true },
+  { name: 'Create service', status: false },
+  { name: 'Create mock data', status: true },
+  { name: 'Create list style', status: false },
   { name: 'Clean bedroom', status: false },
   { name: 'Learn python', status: false },
   { name: 'Cook dinner', status: false },
