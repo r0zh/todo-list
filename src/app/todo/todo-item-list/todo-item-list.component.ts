@@ -10,6 +10,7 @@ import {
   stagger,
 } from '@angular/animations';
 
+// Animation for list
 const listAnimation = trigger('listAnimation', [
   transition('* <=> *', [
     query(
@@ -34,6 +35,6 @@ const listAnimation = trigger('listAnimation', [
 export class TodoItemListComponent {
   constructor(private TodoService: TodoService) {}
 
+  // Get items from local storage
   items: Item[] = this.TodoService.items;
-  // get items from local storage
 }

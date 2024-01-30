@@ -9,11 +9,15 @@ import { TodoService } from '../../services/todo.service';
 export class TodoFormComponent {
   constructor(private TodoService: TodoService) {}
 
+  // Create blank item to add to list later
   item: Item = {
     name: '',
     status: false,
   };
 
+  /**
+   * Adds a new item to the todo list.
+   */
   addItem() {
     if (this.item.name != '') {
       this.TodoService.addItem({ ...this.item });

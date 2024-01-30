@@ -10,6 +10,10 @@ export class RandomTodoItemComponent {
   constructor(private TodoService: TodoService) {}
 
   numTasks = 1;
+
+  /**
+   * Adds random items to the todo list.
+   */
   addRandomItems() {
     for (let i = 0; i < this.numTasks; i++) {
       let randomItem =

@@ -7,10 +7,14 @@ import { TodoService } from '../../services/todo.service';
   selector: 'app-todo-item',
   templateUrl: './todo-item.component.html',
 })
+
 export class TodoItemComponent {
   constructor(private TodoService: TodoService) {}
   @Input() item?: Item;
 
+  /**
+   * Changes the status of the todo item.
+   */
   changeStatus() {
     if (this.item) {
       this.item.status = !this.item.status;
@@ -18,6 +22,10 @@ export class TodoItemComponent {
     }
   }
 
+  /**
+   * Changes the name of the todo item.
+   * @param name - The new name for the todo item.
+   */
   changeName(name: string) {
     if (this.item) {
       this.item.name = name;
@@ -25,6 +33,9 @@ export class TodoItemComponent {
     }
   }
 
+  /**
+   * Removes the todo item.
+   */
   removeItem() {
     if (this.item) {
       this.TodoService.removeItem( this.item );
