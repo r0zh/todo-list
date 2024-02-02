@@ -26,6 +26,7 @@ export class TodoService {
     console.log('addItem', item);
     this.items.push(item);
     this.sortItems();
+    this.updateItems();
   }
 
   /**
