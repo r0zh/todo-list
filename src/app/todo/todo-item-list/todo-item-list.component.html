@@ -1,6 +1,10 @@
 <div [@listAnimation]="items.length">
-  <app-todo-item
-    *ngFor="let item of items"
-    [item]="item"
-  ></app-todo-item>
+  <h2>To-do</h2>
+  <span *ngFor="let item of items">
+    <app-todo-item [item]="item" *ngIf="!item.status"></app-todo-item>
+  </span>
+  <h2>Done</h2>
+  <span *ngFor="let item of items">
+    <app-todo-item [item]="item" *ngIf="item.status"></app-todo-item>
+  </span>
 </div>
