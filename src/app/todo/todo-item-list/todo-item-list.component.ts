@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { Item } from '../../interfaces/item';
 import { TodoService } from '../../services/todo.service';
 import {
@@ -33,8 +33,13 @@ const listAnimation = trigger('listAnimation', [
   animations: [listAnimation],
 })
 export class TodoItemListComponent {
-  constructor(private TodoService: TodoService) {}
+  constructor(private TodoService: TodoService) { }
 
   // Get items from local storage
-  items: Item[] = this.TodoService.items;
+  items: Item[] = [];
+  ngOnInit() {
+    this.TodoService.items$.subscribe((items) => {
+      this.items = items;
+    });
+  }
 }

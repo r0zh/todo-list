@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from './local-storage.service';
 import { Item } from '../interfaces/item';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,11 +13,20 @@ import { Item } from '../interfaces/item';
 export class TodoService {
   // Array of todo items.
   items: Item[] = [];
+  private _items: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
+  private _item = new Subject<Item>();
+
+  items$ = this._items.asObservable();
+  item$ = this._item.asObservable();
 
   constructor(private localStorageService: LocalStorageService) {
-    this.items = this.localStorageService.loadItems();
-    this.sortItems();
+    this._items.next(this.sortItems(this.localStorageService.loadItems()));
+    this.items$.subscribe(() => {
+      this.saveItems();
+    });
   }
+
+
 
   /**
     * Adds a new item to the list of items.
@@ -24,9 +34,10 @@ export class TodoService {
     */
   addItem(item: Item) {
     console.log('addItem', item);
-    this.items.push(item);
-    this.sortItems();
-    this.updateItems();
+    const currentItems = this._items.getValue();
+    currentItems.push(item);
+    this.sortItems(currentItems);
+    this._items.next(currentItems);
   }
 
   /**
@@ -35,12 +46,13 @@ export class TodoService {
     */
   removeItem(item: Item) {
     console.log('removeItem', item);
-    const index = this.items.indexOf(item);
+    const currentItems = this._items.getValue();
+    const index = currentItems.indexOf(item);
     console.log(index)
     if (index > -1) {
-      this.items.splice(index, 1);
+      currentItems.splice(index, 1);
     }
-    this.updateItems();
+    this._items.next(currentItems);
   }
 
   /**
@@ -49,12 +61,13 @@ export class TodoService {
     */
   changeStatus(item: Item) {
     console.log('changeStatus', item);
-    const index = this.items.indexOf(item);
+    const currentItems = this._items.getValue();
+    const index = currentItems.indexOf(item);
+    console.log(index)
     if (index > -1) {
-      this.items[index].status = item.status;
+      currentItems[index].status = item.status;
     }
-    this.sortItems();
-    this.updateItems();
+    this.sortItems(currentItems);
   }
 
   /**
@@ -67,14 +80,14 @@ export class TodoService {
     if (index > -1) {
       this.items[index].name = item.name;
     }
-    this.updateItems();
   }
+
 
   /**
     * Updates the items in local storage.
     */
-  private updateItems() {
-    this.localStorageService.saveItems(this.items);
+  private saveItems() {
+    this.localStorageService.saveItems(this._items.getValue())
   }
 
   /**
@@ -96,8 +109,8 @@ export class TodoService {
   /**
     * Sorts the items based on their status.
     */
-  private sortItems() {
-    this.items.sort(this.compareItems);
+  private sortItems(items: Item[]) {
+    return items.sort(this.compareItems);
   }
 }
 
