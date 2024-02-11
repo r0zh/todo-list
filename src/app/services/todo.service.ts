@@ -22,11 +22,10 @@ export class TodoService {
   constructor(private localStorageService: LocalStorageService) {
     this._items.next(this.sortItems(this.localStorageService.loadItems()));
     this.items$.subscribe(() => {
+      console.log('change in item '+ this._items.getValue());
       this.saveItems();
     });
   }
-
-
 
   /**
     * Adds a new item to the list of items.
@@ -68,6 +67,7 @@ export class TodoService {
       currentItems[index].status = item.status;
     }
     this.sortItems(currentItems);
+    this._items.next(currentItems);
   }
 
   /**
@@ -76,10 +76,12 @@ export class TodoService {
     */
   changeName(item: Item) {
     console.log('changeName', item);
-    const index = this.items.indexOf(item);
+    const currentItems = this._items.getValue();
+    const index = currentItems.indexOf(item);
     if (index > -1) {
-      this.items[index].name = item.name;
+      currentItems[index].name = item.name;
     }
+    this._items.next(currentItems);
   }
 
 
