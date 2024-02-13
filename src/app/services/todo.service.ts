@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LocalStorageService } from './local-storage.service';
+import { IndexedDbService } from './indexed-db.service';
 import { Item } from '../interfaces/item';
 import { BehaviorSubject, Subject } from 'rxjs';
 
@@ -14,90 +14,86 @@ export class TodoService {
   // Array of todo items.
   items: Item[] = [];
   private _items: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
-  private _item = new Subject<Item>();
-
   items$ = this._items.asObservable();
+  private _item: Subject<Item> = new Subject<Item>();
   item$ = this._item.asObservable();
 
-  constructor(private localStorageService: LocalStorageService) {
-    this._items.next(this.sortItems(this.localStorageService.loadItems()));
-    this.items$.subscribe(() => {
-      console.log('change in item '+ this._items.getValue());
-      this.saveItems();
-    });
+  constructor(private indexedDbService: IndexedDbService) {
+    this.loadInitialData();
+  }
+
+  async loadInitialData() {
+    const items = await this.indexedDbService.getAllItems();
+    this._items.next(items);
   }
 
   /**
-    * Adds a new item to the list of items.
-    * @param item - The item to be added.
-    */
-  addItem(item: Item) {
+  * Adds a new item to the list of items.
+  * @param item - The item to be added.
+  */
+  async addItem(item: Item) {
     console.log('addItem', item);
     const currentItems = this._items.getValue();
-    currentItems.push(item);
-    this.sortItems(currentItems);
-    this._items.next(currentItems);
+    await this.indexedDbService.addItem(item);
+    // get id of the last item added
+    const items = await this.indexedDbService.getAllItems();
+    item.id = items[items.length - 1].id;
+    this._items.next([...currentItems, item]);
   }
 
   /**
     * Removes an item from the list of items.
     * @param item - The item to be removed.
     */
-  removeItem(item: Item) {
-    console.log('removeItem', item);
+  async removeItem(item: Item) {
+    const id = item.id!;
+    console.log('removeItem', id);
     const currentItems = this._items.getValue();
-    const index = currentItems.indexOf(item);
-    console.log(index)
-    if (index > -1) {
-      currentItems.splice(index, 1);
-    }
-    this._items.next(currentItems);
+    const index = currentItems.findIndex(itemInArray => itemInArray.id == item.id);
+    currentItems.splice(index, 1);
+    await this.indexedDbService.deleteItem(id); // Elimina de IndexedDB
   }
 
   /**
     * Changes the status of an item.
     * @param item - The item whose status is to be changed.
     */
-  changeStatus(item: Item) {
+  async changeStatus(item: Item) {
     console.log('changeStatus', item);
     const currentItems = this._items.getValue();
-    const index = currentItems.indexOf(item);
-    console.log(index)
-    if (index > -1) {
-      currentItems[index].status = item.status;
-    }
-    this.sortItems(currentItems);
-    this._items.next(currentItems);
+    const index = currentItems.findIndex(itemInArray => itemInArray.id == item.id);
+    currentItems[index].status = item.status;
+    await this.indexedDbService.updateItems(currentItems);
+    await this.loadInitialData(); // Actualiza la lista de items
   }
 
   /**
     * Changes the name of an item.
     * @param item - The item whose name is to be changed.
     */
-  changeName(item: Item) {
+  async changeName(item: Item) {
     console.log('changeName', item);
     const currentItems = this._items.getValue();
-    const index = currentItems.indexOf(item);
-    if (index > -1) {
-      currentItems[index].name = item.name;
-    }
-    this._items.next(currentItems);
-  }
+    const index = currentItems.findIndex(itemInArray => itemInArray.id == item.id);
+    currentItems[index].name = item.name;
 
-
-  /**
-    * Updates the items in local storage.
-    */
-  private saveItems() {
-    this.localStorageService.saveItems(this._items.getValue())
+    await this.indexedDbService.updateItem(item.id!, item);
+    await this.loadInitialData(); // Actualiza la lista de items
   }
 
   /**
-    * Compares two items based on their status.
-    * @param a - The first item.
-    * @param b - The second item.
-    * @returns A negative number if a comes before b, a positive number if a comes after b, or zero if they are equal.
+    * Sorts the items based on their status.
     */
+  private sortItems(items: Item[]) {
+    return items.sort(this.compareItems);
+  }
+
+  /**
+   * Compares two items based on their status.
+   * @param a - The first item.
+   * @param b - The second item.
+   * @returns A negative number if a comes before b, a positive number if a comes after b, or zero if they are equal.
+   */
   private compareItems(a: Item, b: Item): number {
     if (a.status === b.status) {
       return 0;
@@ -106,13 +102,6 @@ export class TodoService {
     } else {
       return -1;
     }
-  }
-
-  /**
-    * Sorts the items based on their status.
-    */
-  private sortItems(items: Item[]) {
-    return items.sort(this.compareItems);
   }
 }
 
