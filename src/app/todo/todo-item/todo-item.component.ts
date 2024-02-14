@@ -1,4 +1,4 @@
-import { Component, Input, Renderer2 } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { Item } from '../../interfaces/item';
 import { TodoService } from '../../services/todo.service';
@@ -9,11 +9,11 @@ import { TodoService } from '../../services/todo.service';
 })
 
 export class TodoItemComponent {
-  constructor(private TodoService: TodoService, private renderer: Renderer2) {
-    this.renderer.listen('window', 'beforeunload', () => this.changeName());
+  constructor(private TodoService: TodoService) {
   }
-  private timeoutId: any;
   @Input() item?: Item;
+  confirmButton = false;
+  name = '';
 
   /**
     Changes the status of the todo item.
@@ -29,17 +29,12 @@ export class TodoItemComponent {
    * Changes the name of the todo item. It waits 5 seconds before executing, so it doesn't change the name too often.
    * @param name - The new name for the todo item.
    */
-  changeName(name?: string) {
-    if (this.timeoutId) {
-      clearTimeout(this.timeoutId);
+  changeName(name: string) {
+    if (this.item) {
+      this.name = name;
+      this.item.name = name;
+      this.TodoService.changeName({ ...this.item });
     }
-
-    this.timeoutId = setTimeout(() => {
-      if (this.item) {
-        this.item.name = name || this.item.name;
-        this.TodoService.changeName({ ...this.item });
-      }
-    }, 5000); // wait 5 second before executing
   }
 
   /**
@@ -52,15 +47,21 @@ export class TodoItemComponent {
   }
 
   /**
-   * Saves the changes to the todo item.
-   * @param name - The new name for the todo item.
-   */
-  saveChanges(name?: string) {
-    if (this.timeoutId) {
-      if (this.item && name) {
-        this.item.name = name;
-        this.TodoService.changeName({ ...this.item });
-      }
+  * Change the value of the confirm button, with a delay of 100ms.
+  * @param value - The value of the confirm button.
+  */
+  toggleConfirmButton() {
+    if (this.confirmButton) {
+      setTimeout(() => {
+        // reset the value of the name input
+        if (this.item) {
+          this.item.name = this.name;
+        }
+        this.confirmButton = !this.confirmButton;
+      }, 300);
+    } else {
+      this.confirmButton = !this.confirmButton;
+      this.name = this.item?.name || '';
     }
   }
 }
