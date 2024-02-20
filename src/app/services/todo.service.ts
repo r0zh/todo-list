@@ -21,12 +21,12 @@ export class TodoService {
   }
 
   loadItems() {
-    this.apiService.getAllItems().pipe(
-      tap((items: Item[]) => {
-        console.log(items)
+    this.apiService.getAllItems().subscribe((items: Item[]) => {
+      if (items !== null) {
+        console.log(items);
         this._items.next(items);
-      })
-    ).subscribe();
+      }
+    });
     console.log("La Consulta a la BD devuelve: ", this._items);
   }
 
@@ -70,8 +70,14 @@ export class TodoService {
   changeStatus(item: Item) {
     console.log('changeStatus', item);
     if (item.id) {
-      this.apiService.updateItem(item);
-      this.loadItems(); // Actualiza la lista de items
+      this.apiService.updateItem(item).subscribe({
+        next: () => {
+          this.loadItems(); // Actualiza la lista de items
+        },
+        error: (error: any) => {
+          console.error("Error al cambiar el estado del personaje:", error);
+        }
+      });
     }
   }
 
@@ -82,8 +88,14 @@ export class TodoService {
   changeName(item: Item) {
     console.log('changeName', item);
     if (item.id) {
-      this.apiService.updateItem(item);
-      this.loadItems(); // Actualiza la lista de items
+      this.apiService.updateItem(item).subscribe({
+        next: () => {
+          this.loadItems(); // Actualiza la lista de items
+        },
+        error: (error: any) => {
+          console.error("Error al cambiar el estado del personaje:", error);
+        }
+      });
     }
   }
 

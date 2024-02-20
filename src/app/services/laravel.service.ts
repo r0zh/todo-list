@@ -32,7 +32,7 @@ export class ApiService {
 
   updateItem(item: Item): Observable<Item> {
     return this.http.put<any>(`${this.baseUrl}/${item.id}`, item).pipe(
-      map(response => response.status ? response.items : null)
+      map(response => response.status ? response.item : null)
     );
   }
 }
