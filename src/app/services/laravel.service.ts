@@ -24,15 +24,15 @@ export class ApiService {
     );
   }
 
-  removeItem(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.baseUrl}/${id}`).pipe(
+  removeItem(item: Item): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/${item.id}`).pipe(
       map(response => response.status ? response.items : null)
     );
   }
 
   updateItem(item: Item): Observable<Item> {
     return this.http.put<any>(`${this.baseUrl}/${item.id}`, item).pipe(
-      map(response => response.status ? response.item : null)
+      map(response => response.status ? response.items : null)
     );
   }
 }

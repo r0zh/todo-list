@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './laravel.service';
 import { Item } from '../interfaces/item';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -51,9 +51,8 @@ export class TodoService {
     * @param item - The item to be removed.
     */
   removeItem(item: Item) {
-    const id = item.id!;
-    console.log('removeItem', id);
-    this.apiService.removeItem(id).subscribe({
+    console.log('removeItem', item.id);
+    this.apiService.removeItem(item).subscribe({
       next: () => {
         this.loadItems(); // Recargar la lista completa desde el servidor
       },
