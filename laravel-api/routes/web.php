@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\ItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +17,3 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::apiResource('items', ItemController::class);
