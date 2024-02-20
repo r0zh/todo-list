@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreItemRequest;
 use App\Models\Item;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreItemRequest;
 
 class ItemController extends Controller
 {
@@ -15,20 +15,51 @@ class ItemController extends Controller
     public function index()
     {
         $items = Item::all();
+
         return response()->json([
-        'status' => true,
-        'items' => $items
+            'status' => true,
+            'items' => $items,
         ]);
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(StoreItemRequest $request)
     {
         $item = Item::create($request->all());
 
         return response()->json([
             'status' => true,
-            'message' => "Item Created successfully!",
-            'item' => $item
+            'message' => 'Item Created successfully!',
+            'item' => $item,
+        ], 200);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Item $item)
+    {
+        $item->update($request->all());
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Item updated successfully!',
+            'item' => $item,
+        ], 200);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Item $item)
+    {
+        $item->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Item deleted successfully!',
         ], 200);
     }
 
@@ -52,22 +83,6 @@ class ItemController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Item $item)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Item $item)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Item $item)
     {
         //
     }
