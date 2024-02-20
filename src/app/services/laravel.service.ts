@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Item } from '../interfaces/item';
-import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable, map } from 'rxjs';
+import { Item } from '../interfaces/item';
 
 
 @Injectable({
@@ -13,18 +13,26 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   getAllItems(): Observable<Item[]> {
-    return this.http.get<Item[]>(`${this.baseUrl}`);
+    return this.http.get<any>(`${this.baseUrl}`).pipe(
+      map(response => response.status ? response.items : null)
+    );
   }
 
   addItem(item: Item): Observable<Item> {
-    return this.http.post<Item>(`${this.baseUrl}`, item);
+    return this.http.post<any>(`${this.baseUrl}`, item).pipe(
+      map(response => response.status ? response.items : null)
+    );
   }
 
   removeItem(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`);
+    return this.http.delete<any>(`${this.baseUrl}/${id}`).pipe(
+      map(response => response.status ? response.items : null)
+    );
   }
 
   updateItem(item: Item): Observable<Item> {
-    return this.http.put<Item>(`${this.baseUrl}/${item.id}`, item);
+    return this.http.put<any>(`${this.baseUrl}/${item.id}`, item).pipe(
+      map(response => response.status ? response.items : null)
+    );
   }
 }
