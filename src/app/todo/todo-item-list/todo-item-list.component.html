@@ -1,4 +1,4 @@
-<div [@listAnimation]="items.length">
+<div>
   <h2>To-do</h2>
   <span *ngFor="let item of items">
     <app-todo-item [item]="item" *ngIf="!item.status"></app-todo-item>
