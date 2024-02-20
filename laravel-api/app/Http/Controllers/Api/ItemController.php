@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Item;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreItemRequest;
 
 class ItemController extends Controller
 {
