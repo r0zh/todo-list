@@ -29,24 +29,24 @@ def leer():
 @app.route("/grabar", methods=["POST"])
 def grabar():
     datos = request.json  # Obtiene los datos enviados en la solicitud POST
-    nombre = datos.get("nombre")
-    fuerza = datos.get("fuerza")
+    name = datos.get("name")
+    status = datos.get("status")
 
     with mysql.connector.connect(**db_config) as conn:
         with conn.cursor() as cursor:
-            consulta = "INSERT INTO item (nombre, fuerza) VALUES (%s, %s)"
-            cursor.execute(consulta, (nombre, fuerza))
+            consulta = "INSERT INTO item (name, status) VALUES (%s, %s)"
+            cursor.execute(consulta, (name, status))
             conn.commit()  # Es importante hacer commit de la transacción
 
     return jsonify({"success": True, "mensaje": "Tarea añadida correctamente"})
 
 
-@app.route("/borrar/<int:id_personaje>", methods=["DELETE"])
-def borrar(id_personaje):
+@app.route("/borrar/<int:item_id>", methods=["DELETE"])
+def borrar(item_id):
     with mysql.connector.connect(**db_config) as conn:
         with conn.cursor() as cursor:
             consulta = "DELETE FROM item WHERE id = %s"
-            cursor.execute(consulta, (id_personaje,))
+            cursor.execute(consulta, (item_id,))
             conn.commit()
 
     return jsonify({"success": True, "mensaje": "Tarea eliminada correctamente"})
