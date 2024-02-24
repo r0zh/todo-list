@@ -18,7 +18,6 @@ def home():
 
 @app.route("/leer", methods=["GET"])
 def leer():
-
     with mysql.connector.connect(**db_config) as conn:
         with conn.cursor(dictionary=True) as cursor:
             cursor.execute("SELECT * FROM item")
@@ -50,6 +49,20 @@ def borrar(item_id):
             conn.commit()
 
     return jsonify({"success": True, "mensaje": "Tarea eliminada correctamente"})
+
+
+@app.route("/actualizar/<int:item_id>", methods=["PUT"])
+def actualizar(item_id):
+    datos = request.json
+    name = datos.get("name")
+    status = datos.get("status")
+
+    with mysql.connector.connect(**db_config) as conn:
+        with conn.cursor() as cursor:
+            consulta = "UPDATE item SET name = %s, status = %s WHERE id = %s"
+            cursor.execute(consulta, (name, status, item_id))
+            conn.commit()
+    return jsonify({"success": True, "mensaje": "Tarea actualizada correctamente"})
 
 
 if __name__ == "__main__":
