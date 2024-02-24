@@ -23,7 +23,7 @@ def leer():
         with conn.cursor(dictionary=True) as cursor:
             cursor.execute("SELECT * FROM item")
             items = cursor.fetchall()
-    return jsonify(items)
+    return jsonify({"items": items, "status": 1})
 
 
 @app.route("/grabar", methods=["POST"])
