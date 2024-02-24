@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './laravel.service';
+import { ApiService } from './python.service';
 import { Item } from '../interfaces/item';
 import { BehaviorSubject } from 'rxjs';
 
