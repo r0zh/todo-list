@@ -35,6 +35,7 @@ export class TodoService {
   */
   addItem(item: Item) {
     console.log('addItem', item);
+    item.position = this.getLastPosition();
     this.apiService.addItem(item).subscribe({
       next: () => {
         this.loadItems(); // Recargar la lista completa desde el servidor
