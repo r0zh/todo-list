@@ -21,7 +21,7 @@ export class TodoItemComponent {
   changeStatus() {
     if (this.item) {
       this.item.status = !this.item.status;
-      this.TodoService.changeStatus({ ...this.item });
+      this.TodoService.updateItem({ ...this.item });
     }
   }
 
@@ -33,7 +33,7 @@ export class TodoItemComponent {
     if (this.item) {
       this.name = name;
       this.item.name = name;
-      this.TodoService.changeName({ ...this.item });
+      this.TodoService.updateItem({ ...this.item });
     }
   }
 

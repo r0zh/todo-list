@@ -63,29 +63,11 @@ export class TodoService {
   }
 
   /**
-    * Changes the status of an item.
+    * Updates an item in the database.
     * @param item - The item whose status is to be changed.
     */
-  changeStatus(item: Item) {
-    console.log('changeStatus', item);
-    if (item.id) {
-      this.apiService.updateItem(item).subscribe({
-        next: () => {
-          this.loadItems(); // Actualiza la lista de items
-        },
-        error: (error: any) => {
-          console.error("Error al cambiar el estado del personaje:", error);
-        }
-      });
-    }
-  }
-
-  /**
-    * Changes the name of an item.
-    * @param item - The item whose name is to be changed.
-    */
-  changeName(item: Item) {
-    console.log('changeName', item);
+  updateItem(item: Item) {
+    console.log('updateItem', item);
     if (item.id) {
       this.apiService.updateItem(item).subscribe({
         next: () => {
