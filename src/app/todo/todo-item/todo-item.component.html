@@ -2,8 +2,9 @@
   <div class="flex gap-4 items-center w-full">
     <input type="checkbox" (change)="changeStatus()" class="form-checkbox h-5 w-5 text-gray-600"
       [checked]="item.status" />
-    <input class="text-gray-600 text-lg w-full" [ngClass]="item.status ? 'line-through' : ''" [(ngModel)]="item.name"
-      (focus)="toggleConfirmButton()" (blur)="toggleConfirmButton()" (keyup.enter)="changeName(item.name)" />
+    <input id="name-input" class="text-gray-600 text-lg w-full" [ngClass]="item.status ? 'line-through' : ''"
+      [(ngModel)]="item.name" (focus)="toggleConfirmButton()" (blur)="toggleConfirmButton()"
+      (keyup.enter)="changeName(item.name);" />
   </div>
 
   <div class="flex items-center justify-center">

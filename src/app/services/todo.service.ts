@@ -24,6 +24,13 @@ export class TodoService {
       this.apiService.getAllItems().pipe(
         tap((items: Item[]) => {
           if (items !== null) {
+            //sort items by position
+            items.sort((a, b) => {
+              if (b.position === undefined || a.position === undefined) {
+                return -1; // or 1, depending on how you want to handle undefined
+              }
+              return a.position - b.position;
+            });
             this._items.next(items);
             console.log("recargo");
             resolve();
