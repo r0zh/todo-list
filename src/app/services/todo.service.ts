@@ -19,6 +19,9 @@ export class TodoService {
     this.loadItems();
   }
 
+  /**
+  * Load the list of items from the server.
+  */
   loadItems(): Promise<void> {
     return new Promise((resolve, reject) => {
       this.apiService.getAllItems().pipe(
@@ -32,7 +35,6 @@ export class TodoService {
               return a.position - b.position;
             });
             this._items.next(items);
-            console.log("recargo");
             resolve();
           }
         }),
@@ -50,9 +52,7 @@ export class TodoService {
   * @param item - The item to be added.
   */
   addItem(item: Item): Promise<void> {
-    console.log('addItem', item);
     item.position = this.getTodosLastPosition();
-    console.log(this.getTodosLastPosition())
 
     return new Promise((resolve, reject) => {
       this.apiService.addItem(item).subscribe({
@@ -78,7 +78,6 @@ export class TodoService {
     * @param item - The item to be removed.
     */
   removeItem(item: Item) {
-    console.log('removeItem', item.id);
     this.apiService.removeItem(item).subscribe({
       next: () => {
         this.loadItems(); // Recargar la lista completa desde el servidor
@@ -94,7 +93,6 @@ export class TodoService {
     * @param item - The item whose status is to be changed.
     */
   updateItem(item: Item) {
-    console.log('updateItem', item);
     if (item.id) {
       this.apiService.updateItem(item).subscribe({
         next: () => {

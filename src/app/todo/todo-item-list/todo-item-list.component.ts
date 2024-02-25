@@ -31,7 +31,6 @@ export class TodoItemListComponent {
   */
   dropTodo(event: CdkDragDrop<Item[]>) {
     if (event.previousContainer === event.container) {
-      console.log(event.container)
       const movedItem = event.container.data[event.previousIndex];
       // Move the item in the array
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
