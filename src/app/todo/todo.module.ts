@@ -6,6 +6,7 @@ import { TodoItemListComponent } from './todo-item-list/todo-item-list.component
 import { TodoItemComponent } from './todo-item/todo-item.component';
 import { TodoComponent } from './pages/todo.component';
 import { FormsModule } from '@angular/forms';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,6 @@ import { FormsModule } from '@angular/forms';
   exports: [
     TodoComponent
   ],
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, DragDropModule],
 })
 export class TodoModule { }
