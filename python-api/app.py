@@ -29,12 +29,13 @@ def leer():
 def grabar():
     datos = request.json  # Obtiene los datos enviados en la solicitud POST
     name = datos.get("name")
+    position = datos.get("position")
     status = datos.get("status")
 
     with mysql.connector.connect(**db_config) as conn:
         with conn.cursor() as cursor:
-            consulta = "INSERT INTO item (name, status) VALUES (%s, %s)"
-            cursor.execute(consulta, (name, status))
+            consulta = "INSERT INTO item (name, status) VALUES (%s, %s, %s)"
+            cursor.execute(consulta, (name, status, position))
             conn.commit()  # Es importante hacer commit de la transacción
 
     return jsonify({"success": True, "mensaje": "Tarea añadida correctamente"})
@@ -55,14 +56,26 @@ def borrar(item_id):
 def actualizar(item_id):
     datos = request.json
     name = datos.get("name")
+    position = datos.get("position")
     status = datos.get("status")
 
     with mysql.connector.connect(**db_config) as conn:
         with conn.cursor() as cursor:
-            consulta = "UPDATE item SET name = %s, status = %s WHERE id = %s"
-            cursor.execute(consulta, (name, status, item_id))
+            consulta = (
+                "UPDATE item SET name = %s, status = %s, position = %s WHERE id = %s"
+            )
+            cursor.execute(consulta, (name, status, position, item_id))
             conn.commit()
     return jsonify({"success": True, "mensaje": "Tarea actualizada correctamente"})
+
+
+@app.route("/random", methods=["GET"])
+def random():
+    with mysql.connector.connect(**db_config) as conn:
+        with conn.cursor(dictionary=True) as cursor:
+            cursor.execute("SELECT * FROM item ORDER BY RAND() LIMIT 1")
+            item = cursor.fetchone()
+    return jsonify({"item": item, "status": 1})
 
 
 if __name__ == "__main__":

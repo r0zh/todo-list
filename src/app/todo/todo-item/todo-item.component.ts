@@ -38,6 +38,17 @@ export class TodoItemComponent {
   }
 
   /**
+   * Changes the position of the todo item.
+   * @param position - The new position for the todo item.
+   */
+  changePosition(position: number) {
+    if (this.item) {
+      this.item.position = position;
+      this.TodoService.updateItem({ ...this.item });
+    }
+  }
+
+  /**
    * Removes the todo item.
    */
   removeItem() {

@@ -7,11 +7,12 @@ import { TodoService } from '../../services/todo.service';
   templateUrl: './todo-form.component.html',
 })
 export class TodoFormComponent {
-  constructor(private TodoService: TodoService) {}
+  constructor(private TodoService: TodoService) { }
 
   // Create blank item to add to list later
   item: Item = {
     name: '',
+    position: 0,
     status: false,
   };
 
@@ -24,6 +25,8 @@ export class TodoFormComponent {
       this.item = {
         name: '',
         status: false,
+        // Set position to end of list
+        position: this.TodoService.items.length,
       };
     }
   }
