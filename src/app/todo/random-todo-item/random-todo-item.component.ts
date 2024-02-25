@@ -19,7 +19,7 @@ export class RandomTodoItemComponent {
     for (let i = 0; i < this.numTasks; i++) {
       let randomItem =
         RANDOM_ITEMS[Math.floor(Math.random() * RANDOM_ITEMS.length)];
-      this.TodoService.addItem({ ...randomItem });
+      await this.TodoService.addItem({ ...randomItem });
     }
   }
 }

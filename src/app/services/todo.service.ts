@@ -19,30 +19,46 @@ export class TodoService {
     this.loadItems();
   }
 
-  loadItems() {
-    this.apiService.getAllItems().subscribe((items: Item[]) => {
-      if (items !== null) {
-        console.log(items);
-        this._items.next(items);
-      }
+  loadItems(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.apiService.getAllItems().subscribe((items: Item[]) => {
+        if (items !== null) {
+          this._items.next(items);
+          console.log("recargo")
+          resolve();
+        }
+      }, error => {
+        console.error("Error when loading items:", error);
+        reject(error);
+      });
     });
-    console.log("La Consulta a la BD devuelve: ", this._items);
   }
 
   /**
   * Adds a new item to the list of items.
   * @param item - The item to be added.
   */
-  addItem(item: Item) {
+  addItem(item: Item): Promise<void> {
     console.log('addItem', item);
     item.position = this.getLastPosition();
-    this.apiService.addItem(item).subscribe({
-      next: () => {
-        this.loadItems(); // Recargar la lista completa desde el servidor
-      },
-      error: (error: any) => {
-        console.error("Error al añadir personaje:", error);
-      }
+    console.log(this.getLastPosition())
+
+    return new Promise((resolve, reject) => {
+      this.apiService.addItem(item).subscribe({
+        next: async () => {
+          try {
+            await this.loadItems(); // Reload the complete list from the server
+            resolve();
+          } catch (error) {
+            console.error("Error when adding character:", error);
+            reject(error);
+          }
+        },
+        error: (error: any) => {
+          console.error("Error when adding character:", error);
+          reject(error);
+        }
+      });
     });
   }
 
