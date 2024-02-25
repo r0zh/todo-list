@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './python.service';
 import { Item } from '../interfaces/item';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, catchError, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -21,16 +21,20 @@ export class TodoService {
 
   loadItems(): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.apiService.getAllItems().subscribe((items: Item[]) => {
-        if (items !== null) {
-          this._items.next(items);
-          console.log("recargo")
-          resolve();
-        }
-      }, error => {
-        console.error("Error when loading items:", error);
-        reject(error);
-      });
+      this.apiService.getAllItems().pipe(
+        tap((items: Item[]) => {
+          if (items !== null) {
+            this._items.next(items);
+            console.log("recargo");
+            resolve();
+          }
+        }),
+        catchError((error) => {
+          console.error("Error when loading items:", error);
+          reject(error);
+          throw error; // rethrow the error if you want it to propagate
+        })
+      ).subscribe();
     });
   }
 
