@@ -13,7 +13,7 @@ export class TodoFormComponent {
   item: Item = {
     name: '',
     position: 0,
-    status: false,
+    status: 0,
   };
 
   /**
@@ -24,7 +24,7 @@ export class TodoFormComponent {
       this.TodoService.addItem({ ...this.item });
       this.item = {
         name: '',
-        status: false,
+        status: 0,
         // Set position to end of list
         position: 0,
       };

@@ -51,8 +51,8 @@ export class TodoService {
   */
   addItem(item: Item): Promise<void> {
     console.log('addItem', item);
-    item.position = this.getLastPosition();
-    console.log(this.getLastPosition())
+    item.position = this.getTodosLastPosition();
+    console.log(this.getTodosLastPosition())
 
     return new Promise((resolve, reject) => {
       this.apiService.addItem(item).subscribe({
@@ -108,11 +108,48 @@ export class TodoService {
   }
 
   /**
-    * Returns the last position.
+    * Returns the last position of the list of todo items.
     */
-  getLastPosition() {
-    return this._items.getValue().length;
+  getTodosLastPosition() {
+    let allItems = this._items.getValue();
+    let lastPosition = 0;
+    // get the last position of the list of items with status 0
+    allItems.forEach((item) => {
+      if (item.position !== undefined && item.status !== undefined && item.position > lastPosition && item.status == 0) {
+        lastPosition = item.position;
+      }
+    });
+    return lastPosition + 1;
   }
 
+  /**
+    * Returns the last position of the list of doing items.
+    */
+  getDoingsLastPosition() {
+    let allItems = this._items.getValue();
+    let lastPosition = 0;
+    // get the last position of the list of items with status 1
+    allItems.forEach((item) => {
+      if (item.position !== undefined && item.status !== undefined && item.position > lastPosition && item.status == 1) {
+        lastPosition = item.position;
+      }
+    });
+    return lastPosition + 1;
+  }
+
+  /**
+  * Returns the last position of the list of done items.
+  */
+  getDonesLastPosition() {
+    let allItems = this._items.getValue();
+    let lastPosition = 0;
+    // get the last position of the list of items with status 2
+    allItems.forEach((item) => {
+      if (item.position !== undefined && item.status !== undefined && item.position > lastPosition && item.status == 2) {
+        lastPosition = item.position;
+      }
+    });
+    return lastPosition + 1;
+  }
 }
 

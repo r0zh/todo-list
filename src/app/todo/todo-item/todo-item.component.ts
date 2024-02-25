@@ -20,7 +20,11 @@ export class TodoItemComponent {
    */
   changeStatus() {
     if (this.item) {
-      this.item.status = !this.item.status;
+      if (this.item.status == 0 || this.item.status == 1) {
+        this.item.status = 2;
+      } else {
+        this.item.status = 0;
+      }
       this.TodoService.updateItem({ ...this.item });
     }
   }

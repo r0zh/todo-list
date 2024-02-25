@@ -10,51 +10,99 @@ import { TodoService } from '../../services/todo.service';
 export class TodoItemListComponent {
   constructor(private TodoService: TodoService) { }
 
-  todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
   // Get items from local storage
-  items: Item[] = [];
+  todos: Item[] = [];
+  doings: Item[] = [];
+  dones: Item[] = [];
+
   ngOnInit() {
     this.TodoService.items$.subscribe((items) => {
-      this.items = items;
+      this.todos = items.filter((item) => item.status === 0);
+      this.doings = items.filter((item) => item.status === 1);
+      this.dones = items.filter((item) => item.status === 2);
     });
   }
-  drop(event: CdkDragDrop<Item[]>) {
+  dropTodo(event: CdkDragDrop<Item[]>) {
     if (event.previousContainer === event.container) {
+      console.log(event.container)
       const movedItem = event.container.data[event.previousIndex];
-
       // Move the item in the array
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-
       // Update the position of the moved item
       movedItem.position = event.currentIndex;
-      this.reorderList(event.previousIndex, event.currentIndex)
+      this.reorderList(event.previousIndex, event.currentIndex, this.todos)
       this.TodoService.updateItem({ ...movedItem });
 
-
     } else {
-      transferArrayItem(
-        event.previousContainer.data,
+      transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex,
-        event.currentIndex,
-      );
+        event.currentIndex);
+      const movedItem = event.container.data[event.currentIndex];
+      movedItem.status = 0;
+      movedItem.position = this.TodoService.getTodosLastPosition()
+      this.TodoService.updateItem({ ...movedItem });
     }
   }
-  reorderList(previousIndex: number, currentIndex: number) {
+
+  dropDoing(event: CdkDragDrop<Item[]>) {
+    if (event.previousContainer === event.container) {
+      const movedItem = event.container.data[event.previousIndex];
+      // Move the item in the array
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      // Update the position of the moved item
+      movedItem.position = event.currentIndex - this.TodoService.getTodosLastPosition()
+      this.reorderList(event.previousIndex, event.currentIndex, this.doings)
+      this.TodoService.updateItem({ ...movedItem });
+
+    } else {
+      transferArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+      const movedItem = event.container.data[event.currentIndex];
+      movedItem.status = 1;
+      movedItem.position = this.TodoService.getDoingsLastPosition()
+      this.TodoService.updateItem({ ...movedItem });
+    }
+  }
+
+  dropDone(event: CdkDragDrop<Item[]>) {
+    if (event.previousContainer === event.container) {
+      const movedItem = event.container.data[event.previousIndex];
+      // Move the item in the array
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      // Update the position of the moved item
+      movedItem.position = event.currentIndex;
+      this.reorderList(event.previousIndex, event.currentIndex, this.dones)
+      this.TodoService.updateItem({ ...movedItem });
+    } else {
+      transferArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+      const movedItem = event.container.data[event.currentIndex];
+      movedItem.status = 2;
+      movedItem.position = this.TodoService.getDonesLastPosition()
+      this.TodoService.updateItem({ ...movedItem });
+    }
+  }
+
+  reorderList(previousIndex: number, currentIndex: number, items: Item[]) {
     if (previousIndex < currentIndex) {
       for (let i = previousIndex; i <= currentIndex; i++) {
-        this.items[i].position = i;
-        this.TodoService.updateItem(this.items[i])
+        items[i].position = i;
+        this.TodoService.updateItem(items[i])
       }
     } else if (previousIndex > currentIndex) {
       for (let i = currentIndex; i <= previousIndex; i++) {
-        this.items[i].position = i;
-        this.TodoService.updateItem(this.items[i])
+        items[i].position = i;
+        this.TodoService.updateItem(items[i])
       }
     }
   }
 
   trackItem(index: number, item: any): any {
-    return item.id; // Assuming each item has a unique 'id' property
+    return item.id;
   }
 }
