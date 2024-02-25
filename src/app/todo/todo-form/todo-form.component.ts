@@ -21,12 +21,13 @@ export class TodoFormComponent {
    */
   addItem() {
     if (this.item.name != '') {
+      this.item.position = this.TodoService.getLastPosition();
       this.TodoService.addItem({ ...this.item });
       this.item = {
         name: '',
         status: false,
         // Set position to end of list
-        position: this.TodoService.items.length,
+        position: 0,
       };
     }
   }

@@ -12,7 +12,6 @@ import { BehaviorSubject } from 'rxjs';
  */
 export class TodoService {
   // Array of todo items.
-  items: Item[] = [];
   private _items: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
   items$ = this._items.asObservable();
 
@@ -78,6 +77,13 @@ export class TodoService {
         }
       });
     }
+  }
+
+  /**
+    * Returns the last position.
+    */
+  getLastPosition() {
+    return this._items.getValue().length;
   }
 
   /**
