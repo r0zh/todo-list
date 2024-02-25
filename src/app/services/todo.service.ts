@@ -103,27 +103,5 @@ export class TodoService {
     return this._items.getValue().length;
   }
 
-  /**
-    * Sorts the items based on their status.
-    */
-  private sortItems(items: Item[]) {
-    return items.sort(this.compareItems);
-  }
-
-  /**
-   * Compares two items based on their status.
-   * @param a - The first item.
-   * @param b - The second item.
-   * @returns A negative number if a comes before b, a positive number if a comes after b, or zero if they are equal.
-   */
-  private compareItems(a: Item, b: Item): number {
-    if (a.status === b.status) {
-      return 0;
-    } else if (a.status) {
-      return 1;
-    } else {
-      return -1;
-    }
-  }
 }
 
