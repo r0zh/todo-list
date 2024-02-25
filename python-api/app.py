@@ -8,7 +8,7 @@ CORS(
 )  # Esto habilitará CORS para todos los dominios en todas las rutas
 # También, permitirá todas las solicitudes de cualquier origen
 # Configuración de la base de datos
-db_config = {"host": "db", "user": "root", "password": "root", "database": "todolist"}
+db_config = {"host": "db", "user": "root", "password": "root", "database": "kanban"}
 
 
 @app.route("/")
