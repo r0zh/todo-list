@@ -34,8 +34,8 @@ def grabar():
 
     with mysql.connector.connect(**db_config) as conn:
         with conn.cursor() as cursor:
-            consulta = "INSERT INTO item (name, status) VALUES (%s, %s, %s)"
-            cursor.execute(consulta, (name, status, position))
+            consulta = "INSERT INTO item (name, position, status) VALUES (%s, %s, %s)"
+            cursor.execute(consulta, (name, position, status))
             conn.commit()  # Es importante hacer commit de la transacción
 
     return jsonify({"success": True, "mensaje": "Tarea añadida correctamente"})
