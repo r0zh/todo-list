@@ -2,6 +2,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { Component } from '@angular/core';
 import { Item } from '../../interfaces/item';
 import { TodoService } from '../../services/todo.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-todo-item-list',
@@ -15,13 +16,19 @@ export class TodoItemListComponent {
   doings: Item[] = [];
   dones: Item[] = [];
 
+  private subscription: Subscription = new Subscription();
+
   ngOnInit() {
-    this.TodoService.items$.subscribe((items) => {
+    this.subscription = this.TodoService.items$.subscribe((items) => {
       this.todos = items.filter((item) => item.status === 0);
       this.doings = items.filter((item) => item.status === 1);
       this.dones = items.filter((item) => item.status === 2);
     });
   }
+
+  /**
+  * Handles the drop event for the todo list.
+  */
   dropTodo(event: CdkDragDrop<Item[]>) {
     if (event.previousContainer === event.container) {
       console.log(event.container)
@@ -45,6 +52,9 @@ export class TodoItemListComponent {
     }
   }
 
+  /**
+  * Handles the drop event for the doing list.
+  */
   dropDoing(event: CdkDragDrop<Item[]>) {
     if (event.previousContainer === event.container) {
       const movedItem = event.container.data[event.previousIndex];
@@ -67,6 +77,9 @@ export class TodoItemListComponent {
     }
   }
 
+  /**
+  * Handles the drop event for the done list.
+  */
   dropDone(event: CdkDragDrop<Item[]>) {
     if (event.previousContainer === event.container) {
       const movedItem = event.container.data[event.previousIndex];
@@ -88,6 +101,9 @@ export class TodoItemListComponent {
     }
   }
 
+  /**
+  * Reorders the list of items.
+  */
   reorderList(previousIndex: number, currentIndex: number, items: Item[]) {
     if (previousIndex < currentIndex) {
       for (let i = previousIndex; i <= currentIndex; i++) {
@@ -102,7 +118,15 @@ export class TodoItemListComponent {
     }
   }
 
+  /**
+  * Track the items by their id.
+  */
   trackItem(index: number, item: any): any {
     return item.id;
   }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
 }

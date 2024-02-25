@@ -22,6 +22,7 @@ export class TodoItemComponent {
     if (this.item) {
       if (this.item.status == 0 || this.item.status == 1) {
         this.item.status = 2;
+        this.item.position = this.TodoService.getTodosLastPosition();
       } else {
         this.item.status = 0;
       }

@@ -1,29 +1,12 @@
-<div class="flex justify-between gap-4 p-4 bg-white rounded">
-  <input
-    id="name"
-    name="name"
-    [(ngModel)]="item.name"
-    required
-    placeholder="New item"
-    class="w-full"
-    (keyup.enter)="addItem()"
-  />
+<div
+  class="flex justify-between gap-4 py-3 pl-5 pr-[26px] bg-white border text-[rgba(0,0,0,0.87)] border-b-[#ccc] border-r-[#ccc] border-l-[#ccc]">
+  <input id=" name" name="name" [(ngModel)]="item.name" required placeholder="New item" class="w-full"
+    (keyup.enter)="addItem()" />
   <button type="submit" (click)="addItem()">
     <span
-      class="inline-flex rounded-md bg-green-500 p-1.5 transition ease-in-out delay-75 hover:bg-green-700 text-white font-medium hover:scale-105"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        viewBox="0 0 24 24"
-        stroke-width="2"
-        stroke-linejoin="round"
-        stroke-linecap="round"
-        stroke="white"
-        height="24"
-        fill="none"
-        class="svg"
-      >
+      class="inline-flex rounded-md bg-green-500 p-1.5 transition ease-in-out delay-75 hover:bg-green-700 text-white font-medium hover:scale-105">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round"
+        stroke-linecap="round" stroke="white" height="24" fill="none" class="svg">
         <line y2="19" y1="5" x2="12" x1="12"></line>
         <line y2="12" y1="12" x2="19" x1="5"></line>
       </svg>
